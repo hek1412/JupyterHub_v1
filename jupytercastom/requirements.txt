@@ -1,0 +1,30 @@
+# Базовые библиотеки
+ipykernel
+transformers
+pandas
+numpy
+tqdm
+sentence_transformers
+
+# Для работы с PDF и HTML
+pypdf
+beautifulsoup4
+html2md
+lxml
+
+# Для работы с LLM и Haystack
+haystack-ai
+pinecone-haystack
+vllm
+
+# Для работы с Milvus
+pymilvus
+milvus_haystack
+
+# Дополнительные инструменты
+jupyterlab-lsp
+psycopg2-binary
+datasets
+accelerate
+evaluate
+sentencepiece

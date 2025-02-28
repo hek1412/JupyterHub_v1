@@ -1,0 +1,68 @@
+services:
+  jupyterhub:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyterhub
+    restart: always
+    image: jupyterhub
+    container_name: jupyterhub
+    networks:
+      - jupyterhub-network
+    volumes:
+      - "./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py"
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+      - "jupyterhub-data:/srv/jupyterhub/data"
+    ports:
+      - "35001:8000"
+    environment:
+      - JUPYTERHUB_BASE_URL=/hub
+      - JUPYTERHUB_URL=http://skayfaks.keenetic.pro:35001
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    # depends_on:
+    #   - jupyterlab
+    runtime: nvidia
+    # privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # jupyterlab:
+  #   image: jupyterlab-v2 #hek1412/dockerfile.jupyterlab_v2:latest   
+  #   # build:
+  #   #   context: .
+  #   #   dockerfile: Dockerfile.jupyterlab
+  #   container_name: jupyterlab
+  #   restart: unless-stopped
+  #   environment:
+  #     - JUPYTER_ENABLE_LAB=yes
+  #     # - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+  #     # - GITHUB_TOKEN=${GITHUB_TOKEN}
+  #   volumes:
+  #     - notebook_data:/home/jovyan/work
+  #   networks:
+  #     - jupyterhub-network
+  #   # ports:
+  #   #   - "8888:8888"
+  #   runtime: nvidia
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: all
+  #             capabilities: [gpu]
+volumes:
+  jupyterhub-data:
+  # notebook_data:
+
+networks:
+  jupyterhub-network:
+    name: jupyterhub-network
+
+
+

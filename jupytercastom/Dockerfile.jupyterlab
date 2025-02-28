@@ -1,0 +1,37 @@
+# Используем базовый образ с PyTorch и CUDA
+FROM quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8
+
+# RUN apt-get update && apt-get install -y --no-install-recommends
+# Копируем requirements.txt в контейнер
+COPY requirements.txt /tmp/requirements.txt
+
+# Устанавливаем дополнительные пакеты
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
+    # rm /tmp/requirements.txt && \
+    jupyter labextension install @krassowski/jupyterlab-lsp && \
+    jupyter server extension enable --py jupyter_lsp
+
+# Установка прав доступа
+RUN fix-permissions /home/jovyan
+
+# Добавляем пользователя jovyan в sudoers (если нужно)
+# RUN echo "jovyan ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# USER ${NB_UID}
+
+# Запуск JupyterLab
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
+# Настройки JupyterLab
+# COPY jupyter_notebook_config.py /etc/jupyter/
+# Создаем пользователя jovyan
+# ARG NB_USER=jovyan
+# ARG NB_UID=1000
+# ARG NB_GID=1001  # Используем другой GID
+
+# RUN groupadd -g ${NB_GID} ${NB_USER} && \
+#     useradd -u ${NB_UID} -g ${NB_GID} -m -s /bin/bash ${NB_USER} && \
+#     echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers  
+# # Переключаемся на пользователя jovyan
+# USER ${NB_USER}
+
+# Запускаем JupyterLab
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]

@@ -1,0 +1,67 @@
+FROM jupyterhub/jupyterhub:latest
+WORKDIR /srv/jupyterhub
+RUN apt-get update -y && \
+    python3 -m pip install --no-cache-dir \
+    dockerspawner \
+    python-dotenv \
+    oauthenticator
+COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+CMD ["jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py"]
+# Переключаемся на root для установки пакетов
+
+# RUN mkdir -p /srv/jupyterhub/data && \
+#     chown -R 1000:100 /srv/jupyterhub 
+# RUN apt-get update -y && \
+#     python3 -m pip install --no-cache-dir \
+#     psycopg2-binary \    
+#     dockerspawner \
+#     oauthenticator
+ 
+# Копируем файл requirements.txt в контейнер
+# COPY requirements.txt /srv/jupyterhub/requirements.txt
+# Устанавливаем зависимости из requirements.txt
+# RUN python3 -m pip install --no-cache-dir -r /srv/jupyterhub/requirements.txt
+   
+# RUN apt-get update -y && \
+#     apt-get install -y python3-pip nodejs npm && \
+#     python3 -m pip install --upgrade pip && \
+#     pip3 install --no-cache-dir \
+#         psycopg2-binary \
+#         dockerspawner \
+#         jupyterhub-nativeauthenticator \
+#         docker && \
+#     npm install -g configurable-http-proxy
+
+# cschranz/gpu-jupyter:v1.7_cuda-12.2_ubuntu-22.04_python-only
+# RUN mkdir -p /srv/jupyterhub/userdata && mkdir -p /srv/jupyterhub/jupyterhub_cookie_secret
+# && chmod 700 /srv/jupyterhub/data  
+# FROM quay.io/jupyterhub/jupyterhub:5.2.1
+# WORKDIR /srv/jupyterhub
+# # Install dockerspawner, nativeauthenticator
+# # hadolint ignore=DL3013
+# RUN python3 -m pip install --no-cache-dir \
+#     psycopg2-binary \    
+#     dockerspawner \
+#     jupyterhub-nativeauthenticator
+    
+# COPY jupyterhub_config.py /srv/jupyter/jupyterhub_config.py
+# CMD ["jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py"]
+
+
+
+# FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu22.04
+
+# WORKDIR /srv/jupyterhub
+
+# RUN apt-get update -y && \
+#     apt-get install -y python3-pip nodejs npm && \
+#     pip3 install --no-cache-dir \
+#         psycopg2-binary \
+#         dockerspawner \
+#         jupyterhub-nativeauthenticator \
+#         docker && \
+#     npm install -g configurable-http-proxy
+
+# COPY config/jupyterhub_config.py /srv/jupyter/jupyterhub_config.py
+
+# CMD ["jupyterhub", "-f", "/srv/jupyter/jupyterhub_config.py"]
