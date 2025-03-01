@@ -66,7 +66,7 @@ docker push hek1412/dockerfile.jupyterlab_v2:latest
 
 ## Docker Compose
 
-### Создаем `docker-compose.yml` для разворачивания jupyterhub 
+### Создаем `docker-compose.yaml` для разворачивания jupyterhub 
 (предварительно переходим в директорию jupyterhub) 
 ```
 services:
@@ -181,12 +181,12 @@ c.JupyterHub.authenticate_prometheus = False                     # Отключ�
 
 Создаём файл `.env` с следующими переменными:
 
-```env
+```
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_TOKEN=your_github_token
 ```
 
-Замените значения `your_github_client_id` и `your_github_token` на реальные данные, полученные в GitHub.
+Значения `your_github_client_id` и `your_github_token` нужно получить в GitHub.
 
 ---
 
@@ -197,5 +197,5 @@ docker compose build
 docker-compose up -d
 ```
 
-Теперь у вас работает JupyterHub `http://skayfaks.keenetic.pro:35001/hub` с поддержкой GPU, аутентификацией через GitHub и динамическим созданием окружений для пользователей!
+Теперь у нас работает JupyterHub `http://skayfaks.keenetic.pro:35001/hub` с поддержкой GPU, аутентификацией через GitHub и динамическим созданием окружений для пользователей!
 
